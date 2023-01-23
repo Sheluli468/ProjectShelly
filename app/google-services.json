@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1095060287253",
+    "project_id": "projectshelly-21b04",
+    "storage_bucket": "projectshelly-21b04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095060287253:android:01a88313904a6e4dfe431c",
+        "android_client_info": {
+          "package_name": "me.shelly.projectshelly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095060287253-m83nt2p295q5oom11npd0md4iocsf8fn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDKi3AIamNPRRcCo5v7NNHSRlb2E8aN8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095060287253-m83nt2p295q5oom11npd0md4iocsf8fn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

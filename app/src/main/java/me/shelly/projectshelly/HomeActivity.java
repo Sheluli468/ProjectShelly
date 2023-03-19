@@ -1,5 +1,7 @@
 package me.shelly.projectshelly;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,9 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,19 +32,19 @@ import me.shelly.projectshelly.databinding.ActivityHomeBinding;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityHomeBinding binding;
-
     private DrawerLayout drawerLayout;
+    private ImageView imageView;
 
     private FirebaseHandler firebaseHandler;
     private FirebaseAuth auth;
 
     private NavigationView navigationView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
 
         // Initializing Firebase Values
         firebaseHandler = new FirebaseHandler();
@@ -80,24 +86,48 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 textViewUsername.setText(userDetails.getUserName());
             });
         }
+
+        imageView = findViewById(R.id.imageview_profile);
+
     }
 
+    // Checking what item clicked and changing fragments
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                break;
+            case R.id.nav_pomodoro:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimerFragment()).commit();
+                break;
+            case R.id.nav_calendar:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                auth.signOut(); // Sign out user
+                Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
+                Intent loginActivity = new Intent(HomeActivity.this, MainActivity.class);
+                loginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginActivity);
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public void onClickProfilePicture(View view) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePictureFragment());
     }
 
+    //Checking back pressed
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

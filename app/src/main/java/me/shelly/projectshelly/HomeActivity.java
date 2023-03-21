@@ -101,9 +101,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_pomodoro:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimerFragment()).commit();
                 break;
-            case R.id.nav_calendar:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
-                break;
+//            case R.id.nav_calendar:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserSettingsFragment()).commit();
+//                break;
             case R.id.nav_logout:
                 auth.signOut(); // Sign out user
                 Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
@@ -117,9 +117,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void onClickProfilePicture(View view) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePictureFragment());
-    }
+//    public void onClickProfilePicture(View view) {
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePictureFragment());
+//    }
 
     //Checking back pressed
     @Override
